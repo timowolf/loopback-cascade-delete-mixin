@@ -38,12 +38,12 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "debug": "^2.3.3",
-    "loopback": "^2.36.0",
-    "mocha": "^3.2.0",
-    "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "loopback": "^3.15.0",
+    "mocha": "^3.5.3",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.14.0"
   },
   "dependencies": {
-    "lodash": "^4.17.2"
+    "lodash": "^4.17.4"
   }
 }
