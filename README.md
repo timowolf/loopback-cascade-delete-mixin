@@ -62,6 +62,32 @@ To use with your Models add the `mixins` attribute to the definition object of y
   }
 ```
 
+If you want a deep delete on some but not on all relation, you can provide an object with the `relation` and the `deepDelete` option into the array. The following uses deep delete on the relation `properties` and not a deep deletion on the relation `description`.
+
+```json
+  {
+    "name": "Product",
+    "properties": {
+      "name": {
+        "type": "string",
+      }
+    },
+    "relations": {
+        "properties": {
+          "type": "hasMany",
+          "model": "Property",
+          "foreignKey": ""
+        }
+     },
+    "mixins": {
+      "CascadeDelete": {
+         "relations": [{"relation": "properties", "deepDelete": false}, "description"],
+         "deepDelete": true
+       }
+    }
+  }
+```
+
 **options**
 
 | option | type | description | required |

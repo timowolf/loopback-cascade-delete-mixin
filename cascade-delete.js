@@ -40,25 +40,31 @@ module.exports = function (Model, options) {
     function cascadeDeletes() {
         return _.map(options.relations, function (relation) {
             return function (modelId) {
-                debug('Relation ' + relation + ' model ' + Model.definition.name);
+                var theRelation = relation;
+                var theDeepDelete = options.deepDelete;
+                if (typeof(relation) === 'object') {
+                  theRelation = relation.relation;
+                  theDeepDelete = relation.deepDelete || false;
+                }
+                debug('Relation ' + theRelation + ' model ' + Model.definition.name);
 
-                if (!Model.relations[relation]) {
-                    debug('Relation ' + relation + ' not found for model ' + Model.definition.name);
-                    throw 'Relation ' + relation + ' not found for model ' + Model.definition.name;
+                if (!Model.relations[theRelation]) {
+                    debug('Relation ' + theRelation + ' not found for model ' + Model.definition.name);
+                    throw 'Relation ' + theRelation + ' not found for model ' + Model.definition.name;
                 }
 
 
-                var relationModel = Model.relations[relation].modelTo;
-                var relationKey = Model.relations[relation].keyTo;
+                var relationModel = Model.relations[theRelation].modelTo;
+                var relationKey = Model.relations[theRelation].keyTo;
 
-                if (Model.relations[relation].modelThrough) {
-                    relationModel = Model.relations[relation].modelThrough;
+                if (Model.relations[theRelation].modelThrough) {
+                    relationModel = Model.relations[theRelation].modelThrough;
                 }
 
                 var where = {};
                 where[relationKey] = modelId;
 
-                if (options.deepDelete) {
+                if (theDeepDelete) {
                   let relationModelIdName = relationModel.getIdName();
                   let fields = {};
                   fields[relationModelIdName] = true;
